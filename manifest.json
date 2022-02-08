@@ -1,9 +1,9 @@
 {
   "name": "Make Wikipedia #1",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "manifest_version": 2,
   "description": "This extension will move Wikipedia pages to the top of your Google search results",
-  "homepage_url": "https://github.com/slaporte/make-wikipedia-first",
+  "homepage_url": "https://github.com/TomW1605/make-wikipedia-first",
   "icons": {
     "16": "imgs/dotlogo-16.png",
     "48": "imgs/dotlogo-48.png",
@@ -17,6 +17,7 @@
   },
   "content_scripts": [
     {
+	  "run_at": "document_start",
       "matches": [
         "https://www.google.com/*"
       ],
