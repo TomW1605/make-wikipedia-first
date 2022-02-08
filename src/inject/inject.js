@@ -18,42 +18,30 @@ chrome.extension.sendMessage({type:'getPref', key:'highlight'}, function(result)
 });
 
 function move_results() {
-    var retries = 4;
-    // using another timer to ensure we catch instant search...
-    var update_delay = setInterval(function() {
-        if (retries > 0) {
-            clearInterval(update_delay);
-        }
-        var results = [];
-        for (var i = 0; i < options['domains'].length; i++) {
-            var domain = options['domains'][i];
-            if (options['number'] === 'first') {
-                if (options['highlight'] === 'true') {
-                    results.push($('cite:contains("' + domain + '")').parents().eq(3).css('background', HIGHLIGHT_COLOR).remove());
-                } else {
-                    results.push($('cite:contains("' + domain + '")').parents().eq(3).remove());
-                }
-            } else if (options['number'] === 'all') {
-                $('cite:contains("' + domain + '")').each(function(i, e) {
-                    if (options['highlight'] === 'true') {
-                        $(e).parents().eq(3).css('background', HIGHLIGHT_COLOR);
-                    }
-                    results.push($(e).parents().eq(3).remove());
-                });
+    var results = [];
+    for (var i = 0; i < options['domains'].length; i++) {
+        var domain = options['domains'][i];
+        if (options['number'] === 'first') {
+            if (options['highlight'] === 'true') {
+                results.push($('cite:contains("' + domain + '")').parents().eq(5).css('background', HIGHLIGHT_COLOR).remove());
+            } else {
+                results.push($('cite:contains("' + domain + '")').parents().eq(5).remove());
             }
+        } else if (options['number'] === 'all') {
+            $('cite:contains("' + domain + '")').each(function(i, e) {
+                if (options['highlight'] === 'true') {
+                    $(e).parents().eq(5).css('background', HIGHLIGHT_COLOR);
+                }
+                results.push($(e).parents().eq(5).remove());
+            });
         }
-        $('#rso').prepend(results);
-        retries--;
-    }, 50);
+    }
+    $('#rso').prepend(results);
 }
 
-var readyStateCheckInterval = setInterval(function() {
-    if (document.readyState === "complete") {
+document.onreadystatechange = function() {
+    if (document.readyState === "interactive") {
         console.log('Moving Wikipedia to #1');
-        clearInterval(readyStateCheckInterval);
         move_results();
-        $("#appbar").bind("DOMSubtreeModified", function() {
-            move_results();
-        });
     }
-}, 100);
+}
