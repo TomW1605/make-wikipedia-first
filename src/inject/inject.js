@@ -18,21 +18,24 @@ chrome.extension.sendMessage({type:'getPref', key:'highlight'}, function(result)
 });
 
 function move_results() {
-    var results = [];
-    for (var i = 0; i < options['domains'].length; i++) {
-        var domain = options['domains'][i];
+    const results = [];
+    for (let i = 0; i < options['domains'].length; i++) {
+        const domain = options['domains'][i];
         if (options['number'] === 'first') {
             if (options['highlight'] === 'true') {
-                results.push($('cite:contains("' + domain + '")').parents().eq(5).css('background', HIGHLIGHT_COLOR).remove());
+                results.push($('cite:contains("' + domain + '")').parents().eq(10).css('background', HIGHLIGHT_COLOR));
             } else {
-                results.push($('cite:contains("' + domain + '")').parents().eq(5).remove());
+                results.push($('cite:contains("' + domain + '")').parents().eq(10));
             }
         } else if (options['number'] === 'all') {
             $('cite:contains("' + domain + '")').each(function(i, e) {
-                if (options['highlight'] === 'true') {
-                    $(e).parents().eq(5).css('background', HIGHLIGHT_COLOR);
+                if ($(e).css('visibility') === "visible")
+                {
+                    if (options['highlight'] === 'true') {
+                        $(e).parents().eq(10).css('background', HIGHLIGHT_COLOR);
+                    }
+                    results.push($(e).parents().eq(10));
                 }
-                results.push($(e).parents().eq(5).remove());
             });
         }
     }
