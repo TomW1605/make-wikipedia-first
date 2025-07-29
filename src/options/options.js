@@ -12,7 +12,8 @@ function save_options() {
       'domains': domains,
       'number': $('#number').val(),
       'highlight': $('#highlight').is(':checked'),
-      'highlightColor': $('#highlightColor').val()
+      'highlightColor': $('#highlightColor').val(),
+      "optionsUpdated": new Date().toISOString()
     }
   );
 
@@ -24,7 +25,7 @@ function save_options() {
 
 function restore_options() {
   StorageAreaLocal.get(null, function (options) {
-    $('#domains').val(options['domains'].join(',') || 'wikipedia');
+    $('#domains').val((options['domains'] || []).join(',') || 'wikipedia');
     $('#number').val(options['number'] || 'all');
     $('#highlight').prop('checked', options['highlight'] || false);
     $('#highlightColor').val(options['highlightColor'] || '#FFFFCC');
