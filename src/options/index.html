@@ -1,4 +1,4 @@
-<html>
+<html xmlns="http://www.w3.org/1999/html">
 <head><title>Options</title></head>
 <style>
 	body {
@@ -11,7 +11,7 @@
 </style>
 <body>
 
-<h1>Make Wikipedia your first search result<h1>
+<h1>Make Wikipedia your first search result</h1>
 <h2>Options</h2>
 <p><label for="domains">Which domains? </label><input type="text" name="domains" id="domains"> (comma separated)</p>
 <label for="number">Move how many results? </label>
@@ -21,8 +21,17 @@
 </select>
 <p><label for="highlight">Highlight results?</label>
 <input type="checkbox" name="highlight" id="highlight"></p>
+<p><label for="highlightColor">Highlight color: </label><input type="color" name="highlightColor" id="highlightColor"></p>
+<p>
+	Light Mode Default: <button id="lightDefault" style="background: #FFFFCC">#FFFFCC</button><br>
+	Dark Mode Default: <button id="darkDefault" style="background: #3D3D00; color: white">#3D3D00</button><br>
+</p>
 
-<p><button id="save">Save</button></p>
+<p>
+	<button id="save">Save</button>
+	<button id="syncToAccount">Sync to Chrome account</button>
+	<button id="syncFromAccount">Sync from Chrome account</button>
+</p>
 
 <div id="status"></div>
 
