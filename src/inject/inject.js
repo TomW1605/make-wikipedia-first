@@ -11,12 +11,28 @@ function saveDefaultSettings() {
     move_results();
 }
 
+function handle_result(e, options) {
+    if (options['highlight']) {
+        $(e).parents().eq(10).css('background', options['highlightColor']);
+    }
+    return $(e).closest('#rso > *')
+    // if (Array.prototype.indexOf.call($('#rso')[0].children, $(e).parents().eq(13)[0]) != 0) {
+    //     if ($(e).parents().eq(9)[0].lastChild.getElementsByTagName('img').length > 1 ||
+    //         $(e).parents().eq(9)[0].lastChild.getElementsByTagName('li').length > 1) {
+    //         return $(e).parents().eq(13);
+    //     } else {
+    //         return $(e).parents().eq(13);
+    //     }
+    // }
+}
+
 function move_results() {
     StorageArea.get(null, function (options) {
         const results = [];
 
         if (!("optionsUpdated" in options)) {
             const newDiv = document.createElement("div");
+            newDiv.style.gridColumn = "1 / -1";
             newDiv.innerHTML = `
                 <div style="margin-bottom: 30px;">
                     <h3>
@@ -51,29 +67,11 @@ function move_results() {
 				if (typeof e === 'undefined') {
 					continue;
 				}
-                if (options['highlight']) {
-                    $(e).parents().eq(10).css('background', options['highlightColor']);
-                }
-				if (Array.prototype.indexOf.call($('#rso')[0].children, $(e).parents().eq(13)[0]) != 0) {
-					if ($(e).parents().eq(9)[0].lastChild.getElementsByTagName('img').length > 1) {
-						results.push($(e).parents().eq(13));
-					} else {
-						results.push($(e).parents().eq(12));
-					}
-                }
+                results.push(handle_result(e, options));
             } else if (options['number'] === 'all') {
                 $('cite:contains("' + domain + '")').each(function (i, e) {
                     if ($(e).css('visibility') === "visible") {
-                        if (options['highlight']) {
-                            $(e).parents().eq(10).css('background', options['highlightColor']);
-                        }
-						if (Array.prototype.indexOf.call($('#rso')[0].children, $(e).parents().eq(13)[0]) != 0) {
-							if ($(e).parents().eq(9)[0].lastChild.getElementsByTagName('img').length > 1) {
-								results.push($(e).parents().eq(13));
-							} else {
-								results.push($(e).parents().eq(12));
-							}
-						}
+                        results.push(handle_result(e, options));
                     }
                 });
             }
