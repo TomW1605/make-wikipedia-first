@@ -15,7 +15,11 @@ function handle_result(e, options) {
     if (options['highlight']) {
         $(e).parents().eq(10).css('background', options['highlightColor']);
     }
-    return $(e).closest('#rso > *')
+    let to_move = $(e).closest('#rso > div[class]');
+    if (to_move.length === 0) {
+        to_move = $(e).closest('#rso > * > div[class]');
+    }
+    return to_move;
     // if (Array.prototype.indexOf.call($('#rso')[0].children, $(e).parents().eq(13)[0]) != 0) {
     //     if ($(e).parents().eq(9)[0].lastChild.getElementsByTagName('img').length > 1 ||
     //         $(e).parents().eq(9)[0].lastChild.getElementsByTagName('li').length > 1) {
